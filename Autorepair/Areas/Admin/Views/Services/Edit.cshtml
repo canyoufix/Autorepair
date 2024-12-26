@@ -1,0 +1,44 @@
+﻿@model Autorepair.Models.Service
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Service</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="CarId" class="control-label"></label>
+                <select asp-for="CarId" class="form-control" asp-items="ViewBag.CarId"></select>
+                <span asp-validation-for="CarId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PartId" class="control-label"></label>
+                <select asp-for="PartId" class="form-control" asp-items="ViewBag.PartId"></select>
+                <span asp-validation-for="PartId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceDescription" class="control-label"></label>
+                <input asp-for="ServiceDescription" class="form-control" />
+                <span asp-validation-for="ServiceDescription" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="ServiceCompletionDate" class="control-label"></label>
+                <input asp-for="ServiceCompletionDate" class="form-control" />
+                <span asp-validation-for="ServiceCompletionDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <a asp-action="Index" class="btn btn-secondary">Назад</a> |
+                <input type="submit" value="Cохранить" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>

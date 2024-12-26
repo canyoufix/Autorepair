@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+
+
+.button-custom {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300; /* Средняя жирность */
+
+    display: inline-block;
+    width: 11em; /* Устанавливаем фиксированную ширину кнопки */
+    height: 3em;
+    border-radius: 0.5em;
+    margin-left: 12px; /* Отступ между кнопками (слева) */
+    margin-right: 12px; /* Отступ между кнопками (справа) */
+    font-size: 15px;
+    color: #000000; /* Цвет текста */
+    border: 1px solid black;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    text-align: center; /* Центрируем текст */
+    line-height: 3em; /* Центрируем текст по вертикали */
+    /* Дополнительные стили для контроля текста */
+    white-space: nowrap; /* Запрещает перенос текста на новую строку */
+    overflow: hidden; /* Скрывает текст, который не помещается */
+    text-overflow: ellipsis; /* Добавляет многоточие, если текст не помещается */
+    text-decoration: none;
+}
+
+    .button-custom::before {
+        content: '';
+        width: 0;
+        height: 3em;
+        border-radius: 0.5em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-image: linear-gradient(to right, #cfff99 0%, #25d7e8 100%);
+        transition: .4s ease;
+        display: block;
+        z-index: -1;
+    }
+
+    .button-custom:hover::before {
+        width: 12em;
+    }
+
+
+
+.button-custom-big {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300; /* Средняя жирность */
+
+    display: inline-block;
+    width: 18em; /* Устанавливаем фиксированную ширину кнопки */
+    height: 3em;
+    border-radius: 0.5em;
+    margin-left: 12px; /* Отступ между кнопками (слева) */
+    margin-right: 12px; /* Отступ между кнопками (справа) */
+    font-size: 15px;
+    color: #000000; /* Цвет текста */
+    border: 1px solid black;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    text-align: center; /* Центрируем текст */
+    line-height: 3em; /* Центрируем текст по вертикали */
+    /* Дополнительные стили для контроля текста */
+    white-space: nowrap; /* Запрещает перенос текста на новую строку */
+    overflow: hidden; /* Скрывает текст, который не помещается */
+    text-overflow: ellipsis; /* Добавляет многоточие, если текст не помещается */
+    text-decoration: none;
+}
+
+    .button-custom-big::before {
+        content: '';
+        width: 0;
+        height: 3em;
+        border-radius: 0.5em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-image: linear-gradient(to right, #cfff99 0%, #25d7e8 100%);
+        transition: .4s ease;
+        display: block;
+        z-index: -1;
+    }
+
+    .button-custom-big:hover::before {
+        width: 18em;
+    }
+
+
+.button-custom-home {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 550; /* Средняя жирность */
+
+    display: inline-block;
+    width: 18em; /* Устанавливаем фиксированную ширину кнопки */
+    height: 3em;
+    border-radius: 30em;
+    margin-left: 12px; /* Отступ между кнопками (слева) */
+    margin-right: 12px; /* Отступ между кнопками (справа) */
+    font-size: 15px;
+    color: #000000; /* Цвет текста */
+    border-radius: 0.5em;
+    border: 1px solid black;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    text-align: center; /* Центрируем текст */
+    line-height: 3em; /* Центрируем текст по вертикали */
+    /* Дополнительные стили для контроля текста */
+    white-space: nowrap; /* Запрещает перенос текста на новую строку */
+    overflow: hidden; /* Скрывает текст, который не помещается */
+    text-overflow: ellipsis; /* Добавляет многоточие, если текст не помещается */
+    text-decoration: none;
+}
+
+    .button-custom-home::before {
+        content: '';
+        width: 0;
+        height: 3em;
+        border-radius: 0.5em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-image: linear-gradient(to right, #64C8FF 0%, #B400C8 100%);
+        transition: .4s ease;
+        display: block;
+        z-index: -1;
+    }
+
+    .button-custom-home:hover::before {
+        width: 18em;
+    }
+
+
+.button-login {
+    --green: #1BFD9C;
+    font-size: 15px;
+    padding: 0.7em 2.7em;
+    letter-spacing: 0.06em;
+    position: relative;
+    font-family: inherit;
+    border-radius: 0.6em;
+    overflow: hidden;
+    transition: all 0.3s;
+    line-height: 1.4em;
+    border: 2px solid var(--green);
+    background: linear-gradient(to right, rgba(27, 253, 156, 0.1) 1%, transparent 40%,transparent 60%, rgba(27, 253, 156, 0.1) 100%);
+    color: var(--green);
+    box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.4), 0 0 9px 3px rgba(27, 253, 156, 0.1);
+}
+
+    .button-login:hover {
+        color: #82ffc9;
+        box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.6), 0 0 9px 3px rgba(27, 253, 156, 0.2);
+    }
+
+    .button-login:before {
+        content: "";
+        position: absolute;
+        left: -4em;
+        width: 4em;
+        height: 100%;
+        top: 0;
+        transition: transform .4s ease-in-out;
+        background: linear-gradient(to right, transparent 1%, rgba(27, 253, 156, 0.1) 40%,rgba(27, 253, 156, 0.1) 60%, transparent 100%);
+    }
+
+    .button-login:hover:before {
+        transform: translateX(15em);
+    }

@@ -1,0 +1,192 @@
+﻿@model IEnumerable<Autorepair.Models.Service>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Добавить</a>
+</p>
+
+<!-- Кнопка для открытия модального окна -->
+<p>
+    <a id="generateInvoiceButton" class="btn btn-primary">Выставить счёт</a>
+</p>
+
+<!-- Форма для поиска по гос номеру -->
+<form method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" class="form-control" name="search" placeholder="Введите гос номер" value="@Context.Request.Query["search"]" />
+        <button class="btn btn-primary" type="submit">Найти</button>
+    </div>
+</form>
+
+<!-- Форма для удаления всех записей по гос номеру -->
+<form method="post" asp-action="DeleteByCarNumber" class="mb-3">
+    <div class="input-group">
+        <input type="text" class="form-control" name="carNumber" placeholder="Введите гос номер для удаления" />
+        <button class="btn btn-danger" type="submit">Удалить записи с номером</button>
+    </div>
+</form>
+
+@if (ViewData["TotalCost"] != null)
+{
+    <div class="alert alert-info mt-3">
+        <strong>Общая сумма ремонтов: </strong> @ViewData["TotalCost"] руб.
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(modelItem => modelItem.Car.CarNumber) <!-- Заменено на конкретный тип -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(modelItem => modelItem.Part.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(modelItem => modelItem.ServiceDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(modelItem => modelItem.ServiceCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(modelItem => modelItem.ServiceCompletionDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car.CarNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Part.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceCost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceCompletionDate)
+                </td>
+                <td>
+                    <div class="button-container">
+                        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id">Редактировать</a> |
+                        <a asp-action="Details" class="btn btn-info" asp-route-id="@item.Id">Подробно</a> |
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id">Удалить</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Модальное окно для выбора гос номера и даты -->
+<div class="modal fade" id="invoiceModal" tabindex="-1" role="dialog" aria-labelledby="invoiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="invoiceModalLabel">Выставить счёт</h5>
+                <!-- Убираем стандартный крестик -->
+            </div>
+            <div class="modal-body">
+                <form id="invoiceForm">
+                    <div class="form-group">
+                        <label for="carOrderSelect">Выберите автомобиль и дату начала ремонта</label>
+                        <select id="carOrderSelect" class="form-control">
+                            <!-- Здесь будет динамически добавляться список гос. номеров -->
+                        </select>
+                    </div>
+                    
+                    <!-- Добавление галочки "Завершен ремонт?" -->
+                    <div class="form-group">
+                        <label for="isCompleted">Завершен ремонт?</label>
+                        <input type="checkbox" id="isCompleted" class="form-check-input" />
+                        <label class="form-check-label" for="isCompleted">Да</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- Кнопка "Закрыть" слева от "Подтвердить" -->
+                <br />
+                <button type="button" class="btn btn-secondary" id="closeModalButton">Закрыть</button>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" id="confirmInvoiceButton">Подтвердить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Открытие модального окна при нажатии на кнопку
+            $('#generateInvoiceButton').click(function () {
+                // Загружаем список заказов с датами начала ремонта
+                $.ajax({
+                    url: '@Url.Action("GetOrdersForInvoice", "Services")', // Контроллер для получения данных
+                    type: 'GET',
+                    success: function (data) {
+                        var options = '';
+                        data.forEach(function (order) {
+                            // Форматируем дату в формате СНГ (день.месяц.год)
+                            var formattedDate = new Date(order.orderDate).toLocaleDateString('ru-RU');
+                            options += `<option value="${order.id}" data-car-id="${order.carId}">${order.carNumber} - Дата начала ремонта: ${formattedDate}</option>`;
+                        });
+                        $('#carOrderSelect').html(options);
+                        $('#invoiceModal').modal('show');
+                    }
+                });
+            });
+
+            // Подтверждение выставления счёта
+            $('#confirmInvoiceButton').click(function () {
+                var selectedOrderId = $('#carOrderSelect').val();
+                var isCompleted = $('#isCompleted').is(':checked'); // Проверка состояния галочки
+
+                console.log("Selected Order ID:", selectedOrderId);
+                console.log("Is Repair Completed?", isCompleted);
+
+                if (selectedOrderId) {
+                    // Отправляем запрос на создание счета
+                    $.ajax({
+                        url: '@Url.Action("GenerateInvoice", "Services")', // Контроллер для расчета стоимости
+                        type: 'POST',
+                        data: {
+                            orderId: selectedOrderId, // Передаем идентификатор выбранного заказа
+                            isCompleted: isCompleted // Передаем состояние галочки
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                alert('Счёт успешно выставлен. Общая сумма: ' + response.totalCost);
+                                $('#invoiceModal').modal('hide');
+                            } else {
+                                alert('Ошибка при выставлении счёта: ' + response.message);
+                            }
+                        }
+                    });
+                } else {
+                    alert("Пожалуйста, выберите заказ.");
+                }
+            });
+
+
+            // Закрытие модального окна при нажатии на кнопку "Закрыть"
+            $('#closeModalButton').click(function () {
+                $('#invoiceModal').modal('hide'); // Закрытие модального окна
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Контакты";
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Autorepair</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        .contact-info {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .contact-info h2 {
+            color: #007bff;
+        }
+        .contact-info .list-group-item {
+            border: none;
+            font-size: 1.1rem;
+        }
+        .contact-info .list-group-item i {
+            margin-right: 10px;
+        }
+        .contact-info .list-group {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+        <div class="contact-info">
+            <h2>Мы всегда рады починить ваш автомобиль!</h2>
+            <p>Для связи с нами используйте следующие способы:</p>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <i class="fas fa-phone-alt"></i>
+                    Телефон: +7 (123) 456-78-90
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-envelope"></i>
+                    Email: support@autorepair.com
+                </li>
+                <li class="list-group-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Адрес: Новосибирск, Россия
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Autorepair.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+    var search = Context.Request.Query["CarNumberSearsh"].ToString(); // Получаем введенный номер из запроса
+}
+
+<h2>Введите гос номер автомобиля для отслеживания состояния его ремонта</h2>
+
+<!-- Форма для поиска по госномеру -->
+<form method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" class="form-control" name="search" placeholder="Введите гос номер" value="@search" />
+        <button class="btn btn-primary" type="submit">Найти</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Car.CarNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompletionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCompleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car.CarNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalCost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsCompleted)
+                </td>
+
+                <td>
+                    <a asp-action="Details" class="btn btn-info" asp-route-id="@item.Id">Подробно</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
